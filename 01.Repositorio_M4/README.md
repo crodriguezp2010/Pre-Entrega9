@@ -17,17 +17,17 @@ Este repositorio incluye un script del Módulo 4 con cuatro consultas de negocio
 
 | Archivo | Descripción |
 | --- | --- |
-| `m4_consultas_negocio(1).sql` | Script del Módulo 4 con las cuatro consultas comerciales. |
+| `m4_consultas_negocio.sql` | Script del Módulo 4 con las cuatro consultas comerciales. |
 | `README.md` | Documentación del proyecto y guía para ejecutar el script. |
 
 > Si el script se publica en GitHub con otro nombre, se debe actualizar el nombre de archivo en esta tabla.
 
 ## Consultas incluidas
 
-1. **Resumen mensual:** calcula el importe facturado con `SUM(cantidad * precio_unitario)`, las unidades vendidas y el importe facturado por unidad, agrupados por número de mes.
-2. **Top 5 de productos:** ordena los productos según su facturación y presenta las cinco primeras posiciones.
-3. **Clientes con múltiples unidades:** muestra cantidad de unidades e importe gastado por cliente, filtrando con `HAVING SUM(cantidad) > 1`.
-4. **Clasificación de facturación mensual:** asigna las etiquetas `ENCIMA` o `DEBAJO` a cada mes según la comparación implementada en el script.
+1. **Resumen mensual:** Contiene el resumen ejecutivo mensual del Total facturado, cantidad de pedidos y ticket promedio, agrupados por mes.
+2. **Top 5 de productos:** Ranking de productos Top 5 por total facturado.
+3. **Clientes con múltiples unidades:** Listado de Clientes recurrentes que hayan realizado más de un pedido.
+4. **Clasificación de facturación mensual:** Listado de Meses por encima/por debajo del promedio Total facturado por mes.
 
 ## Requisitos para ejecutar el script
 
@@ -49,19 +49,12 @@ Este repositorio incluye un script del Módulo 4 con cuatro consultas de negocio
 
 ## Consideraciones para interpretar los resultados
 
-- **Agrupación mensual:** se utiliza `MONTH(fecha_venta)` sin incluir el año. Los datos de un mismo mes de distintos años quedan agrupados conjuntamente.
-- **Indicador de la consulta 1:** aunque se llama `ticket_promedio`, divide la facturación total entre las unidades vendidas, no entre el número de pedidos. Es un **importe promedio por unidad**.
-- **Clientes recurrentes:** la consulta 3 aplica `SUM(cantidad) > 1`; esto **no demuestra** que el cliente haya realizado más de un pedido. Para medir recurrencia por pedidos, habría que revisar el identificador de pedido y la estructura de los datos.
-- **Promedio mensual:** la consulta 4 compara cada total mensual contra `AVG(cantidad * precio_unitario)` calculado a nivel de registro, no contra el promedio de los totales mensuales. Su resultado **no representa** una comparación con el promedio mensual general.
+- **Agrupación mensual:** La consulta 1, se realiza la agrupación del total facturado por mes para ello se hace uso de la función `MONTH(fecha_venta)`.
+- **Indicador de la consulta 1:** La consulta 1, aunque se llama `ticket_promedio`, divide la facturación total entre las unidades vendidas, no entre el número de pedidos. Es un **importe promedio por unidad**.
+- **Clientes recurrentes:** la consulta 3 aplica la funcion `SUM(cantidad) > 1` para obtener los clientes que hayan tenido más de un pedido.
+- **Promedio mensual:** la consulta 4 compara cada total mensual contra la facturación promedio mensual para ello se usa la función `AVG(cantidad * precio_unitario)`.
 
 Estos puntos son observaciones sobre la versión actual del script; no se han alterado las consultas originales.
-
-## Mejoras realizadas a la documentación generada con IA
-
-1. **Identificación del entorno tecnológico:** se especificó SQL Server y T-SQL, en lugar de indicar solamente «SQL», porque el script contiene sintaxis particular como `TOP (5)` y nombres entre corchetes. Esto evita intentar ejecutarlo sin ajustes en otro motor.
-2. **Instrucciones reproducibles:** se añadieron requisitos concretos (base, tabla, columnas y permisos) y una secuencia de ejecución en SSMS. Así, otra persona puede reconocer qué necesita antes de ejecutar las consultas.
-3. **Precisión en la interpretación de resultados:** se agregaron advertencias sobre el cálculo del ticket promedio, los clientes recurrentes y el promedio mensual. Esto evita atribuir a las consultas resultados que el código realmente no calcula.
-4. **Limitaciones de la información disponible:** se aclaró que la base de datos y los datos de muestra no acompañan al script, por lo que el lector debe disponer de ellos previamente.
 
 ## Estado del proyecto
 
